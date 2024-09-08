@@ -77,5 +77,32 @@
             <p>&copy; 2024 三木羽有限公司. All rights reserved.</p>
         </div>
     </footer>
+    <!-- JS Script to Block Debugging -->
+    <script>
+        (() => {
+            function block() {
+                // Check if browser window size changes due to developer tools opening
+                if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
+                    // Replace the page content with a warning message
+                    document.body.innerHTML = "检测到非法调试,请关闭后刷新重试!";
+                }
+    
+                // Periodically run the debugger detection function
+                setInterval(() => {
+                    (function () {
+                        return false;
+                    }
+                    ['constructor']('debugger')
+                    ['call']());
+                }, 50);
+            }
+    
+            try {
+                block();
+            } catch (err) {
+                // Catch any errors silently
+            }
+        })();
+    </script>
 </body>
 </html>
